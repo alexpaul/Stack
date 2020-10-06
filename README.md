@@ -126,7 +126,6 @@ struct LinkedList<T: Equatable> {
       tail = nil
       return removedValue
     }
-    // 1 -> 2 -> 3 -> nil
     
     // 3
     // more than one element in the list
