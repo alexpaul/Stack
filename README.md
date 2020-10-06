@@ -69,6 +69,7 @@ print(stackArr.isEmpty) // true
 class Node<T: Equatable>: Equatable {
   var value: T
   var next: Node<T>?
+  weak var previous: Node<T>? // doubly list, use of weak to prevent retain cycle
   init(_ value: T) {
     self.value = value
   }
@@ -105,6 +106,7 @@ struct LinkedList<T: Equatable> {
       return
     }
     lastNode.next = newNode
+    newNode.previous = lastNode
     tail = newNode
   }
   
@@ -112,7 +114,7 @@ struct LinkedList<T: Equatable> {
   public mutating func removeLast() -> T? {
     // 1
     // empty state
-    guard let _ = tail else {
+    guard let lastNode = tail else {
       return nil
     }
     count -= 1
@@ -125,18 +127,12 @@ struct LinkedList<T: Equatable> {
       return removedValue
     }
     // 1 -> 2 -> 3 -> nil
-    var currentNode = head
+    
     // 3
-    // more than one element in the list, we need to traverse the nodes
-    while let nextNode = currentNode {
-      if nextNode.next == tail {
-        break
-      }
-      currentNode = nextNode.next
-    }
-    let removedValue = currentNode?.value
-    currentNode?.next = nil
-    tail = currentNode
+    // more than one element in the list
+    let removedValue = lastNode.value
+    tail = lastNode.previous
+    lastNode.previous = nil
     return removedValue
   }
 }
@@ -147,14 +143,14 @@ list.append(1)
 list.append(2)
 list.append(3)
 
-print(list.count)
+print(list.count) // 3
 
 list.removeLast()
 list.removeLast()
 
-print(list.count)
+print(list.count) // 1
 
-print(list.peek ?? -1)
+print(list.peek ?? -1) // 1
 ```
 
 #### Imlementation of a `Stack` using a LinkedList
@@ -187,17 +183,18 @@ struct Stack<T: Equatable> {
 }
 
 var navigationStack = Stack<String>()
+
 navigationStack.push("viewController1")
 navigationStack.push("viewController2")
 navigationStack.push("viewController3")
 
-print(navigationStack.count) // 3
-
 navigationStack.pop()
 
-print(navigationStack.count) // 2
+print(navigationStack.peek ?? "no vc's") // viewController2
 
-print(navigationStack.peek ?? "") // viewController2
+print(navigationStack.isEmpty) // false
+
+print(navigationStack.count) // 2
 
 navigationStack.pop()
 navigationStack.pop()
