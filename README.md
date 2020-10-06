@@ -2,7 +2,7 @@
 
 A Stack is an abstract data type. The stack works such that the last element added to it is the first element removed. This implementation is referred to as Last in, First out, or LIFO. As we've seen with recursion, the call stack for functions and navigation controller in iOS development those constructs use the stack methodology for execution.
 
-Some of the key functions of a stack are `peek` or top, `push`, `pop`, `isEmpty` and `count`. 
+Some of the key properties and functions of a stack are `peek` or top, `push`, `pop`, `isEmpty` and `count`. 
 
 `peek`. Returns the element at the top of the stack without removing the element from the stack. 
 
