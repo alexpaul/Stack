@@ -205,4 +205,31 @@ navigationStack.pop()
 print(navigationStack.isEmpty) // true
 ```
 
+## Challenges 
+
+#### Challenge 1 - Min Stack
+
+[LeetCode](https://leetcode.com/problems/min-stack)
+
+
+#### Challenge 2 - Valid Parentheses
+
+[LeetCode](https://leetcode.com/problems/valid-parentheses)
+
+
+#### Challenge 3 - Backspace String Compare
+
+[LeetCode](https://leetcode.com/problems/backspace-string-compare)
+
+
+#### Challenge 4 - Remove Outermost Parentheses
+
+[LeetCode](https://leetcode.com/problems/remove-outermost-parentheses)
+
+
+#### Challenge 5 - Build an Array with Stack Operations
+
+[LeetCode](https://leetcode.com/problems/build-an-array-with-stack-operations)
+
+
 
