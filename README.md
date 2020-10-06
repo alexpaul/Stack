@@ -87,6 +87,8 @@ struct LinkedList<T: Equatable> {
   private var head: Node<T>?
   private var tail: Node<T>?
   
+  // private(set) prevents external changes 
+  // private(set) public var allows access but not modification outside the LinkedList
   private(set) public var count = 0
   
   public var isEmpty: Bool {
