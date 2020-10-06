@@ -60,3 +60,149 @@ stackArr.pop()
 
 print(stackArr.isEmpty) // true
 ```
+
+## Implement a Stack using a Linked List
+
+#### `Node` 
+
+```swift 
+class Node<T: Equatable>: Equatable {
+  var value: T
+  var next: Node<T>?
+  init(_ value: T) {
+    self.value = value
+  }
+  static func ==(lhs: Node, rhs: Node) -> Bool {
+    return lhs.value == rhs.value && lhs.next == rhs.next
+  }
+}
+```
+
+#### `LinkedList` 
+
+```swift
+struct LinkedList<T: Equatable> {
+  // data structure
+  private var head: Node<T>?
+  private var tail: Node<T>?
+  
+  private(set) public var count = 0
+  
+  public var isEmpty: Bool {
+    return head == nil
+  }
+  
+  public var peek: T? {
+    return tail?.value
+  }
+  
+  public mutating func append(_ element: T) {
+    count += 1
+    let newNode = Node(element)
+    guard let lastNode = tail else {
+      head = newNode
+      tail = newNode
+      return
+    }
+    lastNode.next = newNode
+    tail = newNode
+  }
+  
+  @discardableResult
+  public mutating func removeLast() -> T? {
+    // 1
+    // empty state
+    guard let _ = tail else {
+      return nil
+    }
+    count -= 1
+    // 2
+    // one element in the list
+    if head == tail { // Node needs to conform to Equatable
+      let removedValue = head?.value
+      head = nil
+      tail = nil
+      return removedValue
+    }
+    // 1 -> 2 -> 3 -> nil
+    var currentNode = head
+    // 3
+    // more than one element in the list, we need to traverse the nodes
+    while let nextNode = currentNode {
+      if nextNode.next == tail {
+        break
+      }
+      currentNode = nextNode.next
+    }
+    let removedValue = currentNode?.value
+    currentNode?.next = nil
+    tail = currentNode
+    return removedValue
+  }
+}
+
+var list = LinkedList<Int>()
+
+list.append(1)
+list.append(2)
+list.append(3)
+
+print(list.count)
+
+list.removeLast()
+list.removeLast()
+
+print(list.count)
+
+print(list.peek ?? -1)
+```
+
+#### Imlementation of a `Stack` using a LinkedList
+
+```swift
+struct Stack<T: Equatable> {
+  // data structure
+  private var elements = LinkedList<T>()
+  
+  public var count: Int {
+    return elements.count
+  }
+  
+  public var isEmpty: Bool {
+    return elements.isEmpty
+  }
+  
+  public var peek: T? {
+    return elements.peek
+  }
+  
+  public mutating func push(_ element: T) {
+    elements.append(element)
+  }
+  
+  @discardableResult
+  public mutating func pop() -> T? {
+    return elements.removeLast()
+  }
+}
+
+var navigationStack = Stack<String>()
+navigationStack.push("viewController1")
+navigationStack.push("viewController2")
+navigationStack.push("viewController3")
+
+print(navigationStack.count) // 3
+
+navigationStack.pop()
+
+print(navigationStack.count) // 2
+
+print(navigationStack.peek ?? "") // viewController2
+
+navigationStack.pop()
+navigationStack.pop()
+
+print(navigationStack.isEmpty) // true
+```
+
+
