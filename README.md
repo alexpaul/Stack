@@ -179,7 +179,6 @@ struct Stack<T: Equatable> {
   
   @discardableResult
   public mutating func pop() -> T? {
-    guard !isEmpty else { return nil }
     return elements.removeLast()
   }
 }
